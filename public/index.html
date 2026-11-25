@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#090d18">
+    <meta name="description" content="玄天工作站，记录玄灵的日常代码练习与个人创作，收录可与好友线上互动的作品。">
+    <title>玄天工作站 · 在星海相逢</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preload" href="/assets/xuantian.png" as="image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="sky-glow" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="玄天工作站主页">
+        <span class="brand-mark">玄</span><span class="brand-name">玄天工作站<small>XUAN TIAN WORKSHOP</small></span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="#games">项目展示</a><a href="#journal">更新日志</a><a href="#about">关于玄灵</a>
+      </nav>
+      <a class="nav-cta" href="#games">探索星域 <span>↗</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-label="打开导航菜单">☰</button>
+    </header>
+
+    <main>
+      <section class="hero section-shell" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="live-dot"></span> INDEPENDENT CREATIVE WORKSPACE <span class="eyebrow-line"></span> 玄灵的创作空间</p>
+          <h1>在星海相逢，<br><span>在创作中留下回响。</span></h1>
+          <p class="hero-intro">这里收藏着三个小小的世界。愿每一次打开，都能遇见一点意料之外的快乐。</p>
+          <div class="hero-actions"><a class="button button-primary" href="#games">浏览创作项目 <span>↓</span></a><a class="text-link" href="#about">认识创作者 <span>↗</span></a></div>
+          <div class="hero-note"><span class="note-star">✳</span><span>「每一个世界，都值得被认真创造。」<small>玄灵 · 独立创作者</small></span></div>
+        </div>
+        <div class="hero-art" aria-label="幽深星空与星云">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div>
+          <div class="hero-nebula"></div><div class="planet planet-large"></div><div class="planet planet-small"></div>
+          <span class="constellation constellation-a">✦</span><span class="constellation constellation-b">✧</span><span class="constellation constellation-c">✦</span>
+          <span class="planet-label label-one">ORIGIN · 玄天星域</span><span class="planet-label label-two">心之所向，自有星光</span>
+          <div class="art-caption"><span class="caption-rule"></span><span>一场温柔的漫游</span><span>VOL. 01 — 无限可能</span></div>
+        </div>
+        <div class="hero-bottom"><span>SCROLL TO EXPLORE <span class="scroll-mark">↓</span></span><span>EST. 2024 <i>·</i> MADE WITH CURIOSITY</span></div>
+      </section>
+
+      <section class="games-section section-shell" id="games">
+        <div class="section-heading"><div><p class="eyebrow">01 — PROJECTS</p><h2>互动<span>项目</span></h2><p class="section-description">挑一个喜欢的作品，故事从此刻开始。</p></div><span class="heading-aside">三个项目 <b>·</b> 持续记录</span></div>
+        <aside class="use-disclosure" aria-label="站点用途说明"><div class="disclosure-mark">✧</div><div><p class="disclosure-label">PERSONAL · NON-COMMERCIAL</p><p class="disclosure-title">个人开发练习记录 <span>·</span> 无注册 <span>·</span> 无付费</p><p class="disclosure-copy">本站用于日常代码开发练习记录与好友线上互娱，属个人非商业用途。下方链接会打开对应的实际互动页面。</p></div></aside>
+        <div class="game-grid">
+          <article class="game-card game-card-zaizai">
+            <a class="game-image" href="https://zaizai.xuantiangame.com" target="_blank" rel="noopener noreferrer" aria-label="打开仔仔互动项目"><img src="/assets/zaizai.png" alt="仔仔项目角色预览" loading="lazy"><span class="image-index">PROJECT 01</span><span class="image-open">↗</span></a>
+            <div class="game-content"><div class="game-meta"><span>轻松 · 派对</span><span class="status"><i></i> 已上线</span></div><h3>仔仔 <span>ZAIZAI</span></h3><p>和可爱的伙伴们一起猜一猜、笑一笑。每一回合，都是一场友好的小小心机。</p><div class="game-footer"><a href="https://zaizai.xuantiangame.com" target="_blank" rel="noopener noreferrer">打开项目 <span>↗</span></a><button class="like-button" data-like="zaizai" aria-label="为仔仔项目点赞" aria-pressed="false"><span>♡</span><b>0</b></button></div></div>
+          </article>
+          <article class="game-card game-card-bigarm">
+            <a class="game-image" href="https://bigarm.xuantiangame.com" target="_blank" rel="noopener noreferrer" aria-label="打开大臂互动项目"><img src="/assets/bigarm.png" alt="大臂项目角色预览" loading="lazy"><span class="image-index">PROJECT 02</span><span class="image-open">↗</span></a>
+            <div class="game-content"><div class="game-meta"><span>策略 · 同步对战</span><span class="status"><i></i> 已上线</span></div><h3>大臂 <span>BIGARM</span></h3><p>读懂对手的下一步，在恰好的时机守护与出击。轮到你来改变战局。</p><div class="game-footer"><a href="https://bigarm.xuantiangame.com" target="_blank" rel="noopener noreferrer">打开项目 <span>↗</span></a><button class="like-button" data-like="bigarm" aria-label="为大臂项目点赞" aria-pressed="false"><span>♡</span><b>0</b></button></div></div>
+          </article>
+          <article class="game-card game-card-lastdawn">
+            <a class="game-image" href="https://lastdawn.xuantiangame.com" target="_blank" rel="noopener noreferrer" aria-label="打开末日黎明互动项目"><img src="/assets/lastdawn.png" alt="末日黎明中的银龙与朱雀" loading="lazy"><span class="image-index">PROJECT 03</span><span class="image-open">↗</span></a>
+            <div class="game-content"><div class="game-meta"><span>幻想 · 冒险</span><span class="status"><i></i> 已上线</span></div><h3>末日黎明 <span>LAST DAWN</span></h3><p>当暮色笼罩大地，银龙与朱雀的传说再次苏醒。一起走进黎明之前的世界。</p><div class="game-footer"><a href="https://lastdawn.xuantiangame.com" target="_blank" rel="noopener noreferrer">打开项目 <span>↗</span></a><button class="like-button" data-like="lastdawn" aria-label="为末日黎明项目点赞" aria-pressed="false"><span>♡</span><b>0</b></button></div></div>
+          </article>
+        </div>
+        <div class="games-footnote"><span class="footnote-star">✦</span> 项目链接会打开对应的实际互动页面；如需仅供好友访问，请在服务器端配置访问限制。</div>
+      </section>
+
+      <section class="journal-section" id="journal"><div class="section-shell journal-layout"><div class="journal-title"><p class="eyebrow">02 — NOTES</p><h2>日常<span>记录</span></h2><p>关于练习、创作与更新的小消息。</p></div><div class="journal-list">
+        <article class="journal-item"><span class="journal-date">2026.11.25</span><span class="journal-dot"></span><div><h3>玄天工作站，开始记录</h3><p>整理日常代码练习，也收录与好友线上互动的个人项目。</p></div><span class="journal-tag">站点上线</span></article>
+        <article class="journal-item"><span class="journal-date">持续更新</span><span class="journal-dot"></span><div><h3>下一段旅程，正在酝酿</h3><p>新点子、新玩法，都会在这里留下足迹。</p></div><span class="journal-tag tag-muted">开发中</span></article>
+      </div></div></section>
+
+      <section class="about-section section-shell" id="about"><div class="about-orbit" aria-hidden="true"><span>玄</span><i>✦</i><i>✧</i></div><div class="about-copy"><p class="eyebrow">03 — THE CREATOR</p><h2>你好，我是<span>玄灵。</span></h2><p>一个喜欢把灵感变成小作品的人。玄天工作站记录日常代码开发练习与个人创作，也收录可与好友线上互动的项目。</p><p>愿每一次练习，都让这些创作慢慢变得完整。</p><div class="signature">玄灵 <span>XUAN LING · CREATOR</span></div></div></section>
+
+    </main>
+
+    <footer class="site-footer"><div class="section-shell footer-inner"><a class="brand footer-brand" href="#home"><span class="brand-mark">玄</span><span class="brand-name">玄天工作站<small>XUAN TIAN WORKSHOP</small></span></a><p>日常练习，认真创作，和好友分享快乐。</p><span class="footer-credit">© 2026 玄灵 · 用好奇心制作 <span>✦</span></span></div></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
