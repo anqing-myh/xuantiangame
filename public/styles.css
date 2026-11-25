@@ -38,8 +38,10 @@ body {
 .disclosure-title { margin: 0; color: #e4d6b6; font: 12px var(--serif); letter-spacing: .04em; }
 .disclosure-title span { color: var(--gold-soft); padding-inline: 4px; }
 .disclosure-copy { margin: 5px 0 0; color: #99959a; font-size: 10px; line-height: 1.8; }
+.filing-link { margin-left: 12px; color: #a6a4aa; font-size: 10px; letter-spacing: 0; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 640px) {
   .use-disclosure { margin: 18px 0; padding: 13px; gap: 10px; }
   .disclosure-title { font-size: 11px; }
   .disclosure-copy { font-size: 9px; }
+  .filing-link { font-size: 9px; }
 }
