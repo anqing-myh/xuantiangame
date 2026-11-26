@@ -74,3 +74,46 @@ test('homepage, background image, and game artwork are served', async () => {
     }
   });
 });
+
+test('background preload and CSS share a versioned image URL with a year of caching', async () => {
+  await withServer(async (baseUrl) => {
+    const htmlResponse = await fetch(baseUrl);
+    assert.equal(htmlResponse.headers.get('cache-control'), 'no-cache');
+    const html = await htmlResponse.text();
+    const css = await (await fetch(`${baseUrl}/styles.css`)).text();
+    const backgroundUrl = html.match(/href="(\/assets\/xuantian\.png\?v=[a-f0-9]{16})"/)[1];
+    assert.ok(css.includes(`url('${backgroundUrl}')`));
+
+    const image = await fetch(`${baseUrl}${backgroundUrl}`, { method: 'HEAD' });
+    assert.equal(image.status, 200);
+    assert.equal(image.headers.get('cache-control'), 'public, max-age=31536000, immutable');
+    assert.equal(await image.text(), '');
+    assert.ok(Number(image.headers.get('content-length')) > 0);
+
+    // Old or unversioned URLs must remain updateable after a deployment.
+    for (const assetPath of ['/assets/xuantian.png', '/assets/xuantian.png?v=old']) {
+      const response = await fetch(`${baseUrl}${assetPath}`, { method: 'HEAD' });
+      assert.equal(response.headers.get('cache-control'), 'no-cache');
+    }
+    const api = await fetch(`${baseUrl}/api/likes`);
+    assert.equal(api.headers.get('cache-control'), 'no-store');
+  });
+});
+
+test('unchanged static files return 304 without downloading their contents again', async () => {
+  await withServer(async (baseUrl) => {
+    for (const assetPath of ['/', '/styles.css', '/app.js', '/assets/xuantian.png']) {
+      const first = await fetch(`${baseUrl}${assetPath}`);
+      const etag = first.headers.get('etag');
+      assert.ok(etag);
+      await first.arrayBuffer();
+      const cached = await fetch(`${baseUrl}${assetPath}`, { headers: { 'If-None-Match': etag } });
+      assert.equal(cached.status, 304, assetPath);
+      assert.equal(await cached.text(), '');
+      const stale = await fetch(`${baseUrl}${assetPath}`, {
+        method: 'HEAD', headers: { 'If-None-Match': '"older-version"' }
+      });
+      assert.equal(stale.status, 200, assetPath);
+    }
+  });
+});

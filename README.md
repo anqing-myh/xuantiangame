@@ -34,7 +34,9 @@ npm start
 
 ## 背景图
 
-主页使用 `assets/xuantian.png` 作为全页星空背景，并有深色渐变遮罩和移动端裁切适配。更换时替换该图片，或同步更新 `public/styles.css` 中 `.sky-glow` 图片路径及 `public/index.html` 预加载链接。展示图片也位于 `assets/`，由服务器通过 `/assets/...` 提供。
+主页使用 `assets/xuantian.png` 作为全页星空背景，并有深色渐变遮罩和移动端裁切适配。展示图片也位于 `assets/`，由服务器通过 `/assets/...` 提供。服务启动时根据图片内容生成版本号，并自动为 HTML 和 CSS 中的图片链接添加 `?v=...`，版本链接允许浏览器缓存一年。更换图片后提交并部署重启，版本号自动变化；预加载与 CSS 使用相同链接，不会重复下载。修改图片路径时仍需同步更新 HTML 与 CSS。
+
+HTML、CSS、JS 等资源使用 ETag 校验，未变更时返回 304，不重复发送内容。点赞 API 禁止缓存。宝塔 Nginx 反向代理中的 `expires 1m` 和额外的 `Cache-Control` 设置应移除，以免覆盖或冲突；完整配置见 [图片缓存配置](docs/browser-cache.md)。无痕窗口、清除缓存、强制刷新或浏览器清理磁盘缓存后，图片仍可能重新下载。
 
 
 ## Baota panel deployment

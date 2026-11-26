@@ -1,6 +1,7 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
+const { createHash } = require('node:crypto');
 
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC = path.join(ROOT, 'public');
@@ -20,6 +21,13 @@ const MIME_TYPES = {
 function createServer({ dataFile = process.env.DATA_FILE || path.join(ROOT, 'data', 'reactions.json') } = {}) {
   const limits = new Map();
   let writeQueue = Promise.resolve();
+  // A deployment restarts the service, so changed images get new cache URLs.
+  const assetVersions = new Map();
+  for (const entry of fs.readdirSync(path.join(ROOT, 'assets'), { withFileTypes: true })) {
+    if (!entry.isFile()) continue;
+    const content = fs.readFileSync(path.join(ROOT, 'assets', entry.name));
+    assetVersions.set(`/assets/${entry.name}`, createHash('sha256').update(content).digest('hex').slice(0, 16));
+  }
 
   async function readData() {
     try {
@@ -143,11 +151,40 @@ function createServer({ dataFile = process.env.DATA_FILE || path.join(ROOT, 'dat
     try {
       const stat = await fs.promises.stat(file);
       if (!stat.isFile()) throw Object.assign(new Error('not a file'), { code: 'ENOENT' });
-      response.writeHead(200, {
-        'Content-Type': MIME_TYPES[path.extname(file).toLowerCase()] || 'application/octet-stream',
+      const extension = path.extname(file).toLowerCase();
+      let content;
+      if (extension === '.html' || extension === '.css') {
+        const source = await fs.promises.readFile(file, 'utf8');
+        content = Buffer.from(source.replace(/\/assets\/[^\s"'()<>?]+/g, (assetPath) => {
+          const version = assetVersions.get(assetPath);
+          return version ? `${assetPath}?v=${version}` : assetPath;
+        }));
+      }
+      const version = assetVersions.get(pathname);
+      const etag = content
+        ? `"${createHash('sha256').update(content).digest('hex')}"`
+        : `W/"${stat.size.toString(16)}-${stat.mtimeMs.toString(16)}"`;
+      const headers = {
+        'Content-Type': MIME_TYPES[extension] || 'application/octet-stream',
+        'Cache-Control': version && url.searchParams.get('v') === version
+          ? 'public, max-age=31536000, immutable'
+          : 'no-cache',
+        'ETag': etag,
         'X-Content-Type-Options': 'nosniff',
         'Referrer-Policy': 'strict-origin-when-cross-origin'
-      });
+      };
+      const ifNoneMatch = request.headers['if-none-match'];
+      if (ifNoneMatch && (ifNoneMatch.trim() === '*' || ifNoneMatch.split(',').some((tag) =>
+        tag.trim().replace(/^W\//, '') === etag.replace(/^W\//, '')))) {
+        response.writeHead(304, headers);
+        response.end();
+        return;
+      }
+      response.writeHead(200, { ...headers, 'Content-Length': content ? content.length : stat.size });
+      if (request.method === 'HEAD' || content) {
+        response.end(request.method === 'HEAD' ? undefined : content);
+        return;
+      }
       fs.createReadStream(file).pipe(response);
     } catch (error) {
       sendJson(response, error.code === 'ENOENT' ? 404 : 500, { error: '没有找到这个页面。' });
